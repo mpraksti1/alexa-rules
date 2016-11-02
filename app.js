@@ -49,15 +49,13 @@ app.post('/rules', requestVerifier, function(req, res) {
       }
     });
   } else if (req.body.request.type === 'IntentRequest' &&
-           req.body.request.intent.name === 'rules') {
+           req.body.request.intent.name === 'Rule') {
 
     if (!req.body.request.intent.slots.AMAZON.NUMBER ||
         !req.body.request.intent.slots.AMAZON.NUMBER.value) {
-      // Handle this error by producing a response like:
-      // "Hmm, what day do you want to know the forecast for?"
     }
 
-    let currRule = rules[req.body.request.intent.slots.AMAZON.NUMBER].rule;
+    var currRule = rules[req.body.request.intent.slots.AMAZON.NUMBER].rule;
 
     res.json({
       "version": "1.0",
