@@ -1,20 +1,42 @@
 var express = require('express'),
-    app = express();
-
-app.set('port', (process.env.PORT || 5000));
+    bodyParser = require('body-parser'),
+    app = express(),
+    alexaVerifier = require('alexa-verifier'); 
 
 var rules = [{
-    number: 1,
-    rule: "This is rule number 1"
-},{
-    number: 2,
-    rule: "This is rule number 2"
-},{
-    number: 3,
-    rule: "This is rule number 3"
-}];
+        number: 1,
+        rule: "This is rule number 1"
+    },{
+        number: 2,
+        rule: "This is rule number 2"
+    },{
+        number: 3,
+        rule: "This is rule number 3"
+    }
+}]
 
-app.post('/rules', function(req, res) {
+function requestVerifier(req, res, next) {
+    alexaVerifier(
+        req.headers.signaturecertchainurl,
+        req.headers.signature,
+        req.rawBody,
+        function verificationCallback(err) {
+            if (err) {
+                res.status(401).json({ message: 'Verification Failure', error: err });
+            } else {
+                next();
+            }
+        }
+    );
+}
+
+app.use(bodyParser.json({
+    verify: function getRawBody(req, res, buf) {
+        req.rawBody = buf.toString();
+    }
+}));
+
+app.post('/rules', requestVerifier, function(req, res) {
   console.log(req);
     if (req.body.request.type === 'LaunchRequest') {
         res.json({
