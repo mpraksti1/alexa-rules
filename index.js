@@ -15,6 +15,7 @@ var rules = [{
 }];
 
 app.post('/rules', function(req, res) {
+  console.log(req);
     if (req.body.request.type === 'LaunchRequest') {
         res.json({
             "version": "1.0",
