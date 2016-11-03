@@ -13,7 +13,7 @@ var rules = [{
         number: 3,
         rule: "This is rule number 3"
     }
-}]
+];
 
 function requestVerifier(req, res, next) {
     alexaVerifier(
