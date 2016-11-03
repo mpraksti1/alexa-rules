@@ -15,8 +15,9 @@ var rules = [{
 }];
 
 app.post('/rules', function(req, res) {
-    console.log(req.body);
+    console.log(req);
 });
+
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
