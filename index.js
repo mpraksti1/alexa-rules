@@ -15,9 +15,18 @@ var rules = [{
 }];
 
 app.post('/rules', function(req, res) {
-    console.log(req);
+        res.json({
+            "version": "1.0",
+            "response": {
+                "shouldEndSession": true,
+                "outputSpeech": {
+                    "type": "SSML",
+                    "ssml": "<speak>HI</speak>"
+                }
+            }
+        });
+    }
 });
-
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 });
